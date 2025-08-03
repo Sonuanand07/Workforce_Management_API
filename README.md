@@ -83,8 +83,8 @@ curl --location 'http://localhost:8080/task-mgmt/create' \
             "task": "CREATE_INVOICE",
             "assignee_id": 1,
             "priority": "HIGH",
-            "task_deadline_time": 1728192000000,
-            "start_date": 1672531200000
+            "task_deadline_time": 2025-08-03T19:24:17.7922207,
+            "start_date": 2025-08-03
         }
     ]
 }'
@@ -121,8 +121,8 @@ curl --location 'http://localhost:8080/task-mgmt/assign-by-ref' \
 curl --location 'http://localhost:8080/task-mgmt/fetch-by-date/v2' \
 --header 'Content-Type: application/json' \
 --data '{
-    "start_date": 1672531200000,
-    "end_date": 1735689599000,
+    "start_date": 2025-08-03,
+    "end_date": 2025-08-09,
     "assignee_ids": [1, 2]
 }'
 ```
