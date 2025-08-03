@@ -8,6 +8,7 @@ import com.railse.hiring.workforcemgmt.model.enums.Task;
 import com.railse.hiring.workforcemgmt.model.enums.TaskStatus;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,11 +22,11 @@ public class TaskManagementDto {
     private String description;
     private TaskStatus status;
     private Long assigneeId;
-    private Long taskDeadlineTime;
+    private LocalDateTime taskDeadlineTime;
     private Priority priority;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private Long startDate;
+    private LocalDate startDate;
     private List<TaskActivityDto> activities;
     private List<TaskCommentDto> comments;
 }

@@ -6,6 +6,8 @@ import com.railse.hiring.workforcemgmt.model.enums.Task;
 import com.railse.hiring.workforcemgmt.model.enums.TaskStatus;
 import lombok.Data;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,9 +19,9 @@ public class TaskManagement {
     private String description;
     private TaskStatus status;
     private Long assigneeId;
-    private Long taskDeadlineTime;
+    private LocalDateTime taskDeadlineTime;
     private Priority priority;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private Long startDate; // When the task should start being worked on
+    private LocalDate startDate; // When the task should start being worked on
 }

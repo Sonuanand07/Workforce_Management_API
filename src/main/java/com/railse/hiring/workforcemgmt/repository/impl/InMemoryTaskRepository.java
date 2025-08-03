@@ -8,6 +8,7 @@ import com.railse.hiring.workforcemgmt.model.enums.TaskStatus;
 import com.railse.hiring.workforcemgmt.repository.TaskRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -23,16 +24,16 @@ public class InMemoryTaskRepository implements TaskRepository {
     private final AtomicLong idCounter = new AtomicLong(0);
 
     public InMemoryTaskRepository() {
-        // Seed data
-        createSeedTask(101L, ReferenceType.ORDER, Task.CREATE_INVOICE, 1L, TaskStatus.ASSIGNED, Priority.HIGH, System.currentTimeMillis() - 86400000); // Yesterday
-        createSeedTask(101L, ReferenceType.ORDER, Task.ARRANGE_PICKUP, 1L, TaskStatus.COMPLETED, Priority.HIGH, System.currentTimeMillis());
-        createSeedTask(102L, ReferenceType.ORDER, Task.CREATE_INVOICE, 2L, TaskStatus.ASSIGNED, Priority.MEDIUM, System.currentTimeMillis());
-        createSeedTask(201L, ReferenceType.ENTITY, Task.ASSIGN_CUSTOMER_TO_SALES_PERSON, 2L, TaskStatus.ASSIGNED, Priority.LOW, System.currentTimeMillis());
-        createSeedTask(201L, ReferenceType.ENTITY, Task.ASSIGN_CUSTOMER_TO_SALES_PERSON, 3L, TaskStatus.ASSIGNED, Priority.LOW, System.currentTimeMillis()); // Duplicate for Bug #1
-        createSeedTask(103L, ReferenceType.ORDER, Task.COLLECT_PAYMENT, 1L, TaskStatus.CANCELLED, Priority.MEDIUM, System.currentTimeMillis()); // For Bug #2
+        // Seed data using LocalDate for startDate and LocalDateTime for deadline
+        createSeedTask(101L, ReferenceType.ORDER, Task.CREATE_INVOICE, 1L, TaskStatus.ASSIGNED, Priority.HIGH, LocalDate.now().minusDays(1));
+        createSeedTask(101L, ReferenceType.ORDER, Task.ARRANGE_PICKUP, 1L, TaskStatus.COMPLETED, Priority.HIGH, LocalDate.now());
+        createSeedTask(102L, ReferenceType.ORDER, Task.CREATE_INVOICE, 2L, TaskStatus.ASSIGNED, Priority.MEDIUM, LocalDate.now());
+        createSeedTask(201L, ReferenceType.ENTITY, Task.ASSIGN_CUSTOMER_TO_SALES_PERSON, 2L, TaskStatus.ASSIGNED, Priority.LOW, LocalDate.now());
+        createSeedTask(201L, ReferenceType.ENTITY, Task.ASSIGN_CUSTOMER_TO_SALES_PERSON, 3L, TaskStatus.ASSIGNED, Priority.LOW, LocalDate.now()); // Duplicate for Bug #1
+        createSeedTask(103L, ReferenceType.ORDER, Task.COLLECT_PAYMENT, 1L, TaskStatus.CANCELLED, Priority.MEDIUM, LocalDate.now()); // For Bug #2
     }
 
-    private void createSeedTask(Long refId, ReferenceType refType, Task task, Long assigneeId, TaskStatus status, Priority priority, Long startDate) {
+    private void createSeedTask(Long refId, ReferenceType refType, Task task, Long assigneeId, TaskStatus status, Priority priority, LocalDate startDate) {
         long newId = idCounter.incrementAndGet();
         TaskManagement newTask = new TaskManagement();
         newTask.setId(newId);
@@ -43,8 +44,8 @@ public class InMemoryTaskRepository implements TaskRepository {
         newTask.setStatus(status);
         newTask.setPriority(priority);
         newTask.setDescription("This is a seed task.");
-        newTask.setTaskDeadlineTime(System.currentTimeMillis() + 86400000); // 1 day from now
-        newTask.setStartDate(startDate);
+        newTask.setStartDate(startDate); // LocalDate
+        newTask.setTaskDeadlineTime(LocalDateTime.now().plusDays(1)); // LocalDateTime
         newTask.setCreatedAt(LocalDateTime.now());
         newTask.setUpdatedAt(LocalDateTime.now());
         taskStore.put(newId, newTask);

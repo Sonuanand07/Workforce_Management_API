@@ -7,6 +7,9 @@ import com.railse.hiring.workforcemgmt.model.enums.Priority;
 import com.railse.hiring.workforcemgmt.model.enums.Task;
 import lombok.Data;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -22,7 +25,7 @@ public class TaskCreateRequest {
         private Task task;
         private Long assigneeId;
         private Priority priority;
-        private Long taskDeadlineTime;
-        private Long startDate;
+        private LocalDateTime taskDeadlineTime;
+        private LocalDate startDate;
     }
 }
